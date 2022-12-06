@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+ <script src="scripts/vue.js"></script>
+ <link rel="stylesheet" href="css/styles.css" />
+
+ <title>Elige tu propia aventura</title>
+</head>
+
+<body>
+
+ <div class="app">
+  <div class="container-fluid px-0">
+   <header>
+
+    <componente-navbar :nombreweb="nombreweb"></componente-navbar>
+
+    <h1 class="d-none">
+     Parcial I- Lucia Coutinho
+    </h1>
+   </header>
+  </div>
+
+
+  <main>
+   <div class="container">
+
+    <div class="mx-auto mt-5">
+
+     <div class="row">
+      <div class="col-6">
+       <div class="pt-3 pb-4 ">
+        <h2 class="text-main pt-5">¡Elige tu propia aventura!</h2>
+        <p class="descripcion-inicio">
+         Inspirandonos en la modalidad de los libros "Elige tu propia aventura" populares en los 2000´, en esta historia
+         sobre un genio de la botella, podrás elegir las desiciones que tomarás hasta llegar al final de
+         la
+         aventura
+        </p>
+
+       </div>
+
+
+
+       <p class="text-color fs-3">¿Comenzamos?</p>
+
+
+       <componente-choice :historia="historia"></componente-choice>
+
+       <div v-if="historia.condicional" class="my-5">
+        <div class="form-group">
+         <p :class="textoColor">¿Cómo querés que se llame tu personaje?</p>
+         <label for="nombre">Ingresá su nombre</label>
+         <input type="text" v-model="historia.nombre" name="nombre" id="nombre" />
+        </div>
+        <div v-if="historia.nombre" class="pt-3">
+         <p>Que lindo nombre <span class="color"> {{historia.nombre}}</span>!</p>
+        </div>
+
+       </div>
+
+      </div>
+      <div class="col-6">
+       <img src="img/chica_leyendo.png" alt="" class="img-fluid">
+      </div>
+     </div>
+
+
+
+
+
+
+     <div v-if="historia.nombre" class="my-5">
+
+      <div class="row px-5">
+       <div class="col-md-6">
+        <img src="img/botella-mar-01.jpg" alt="Botella en el mar" class="img fluid rounded-circle">
+       </div>
+
+       <div class="col-md-6">
+        <p>Es otoño y hace frío. {{historia.nombre}} está paseando por una playa desierta cuando de repente ve en la
+         orilla una
+         botella
+         vieja, de extraño aspecto, que las olas arrastraron hasta la playa</p>
+        <p>La recoge y la observa con detenimiento. Es de color dorado, oscuro, y está cerrada con un tapón de
+         corcho.
+         Parece llena de humo. {{historia.nombre}} mira bien la botella y logra ver algo entre el humo... Pero no es
+         algo, sino
+         alguien. ¡Un
+         hombre
+         diminuto!</p>
+        <p>¿Será tal vez un genio...?</p>
+
+
+        <a href="index.html#continua1" class="btn btn-color my-2" type="submit"
+         @click="historia.continuar=true">Continuar</a>
+       </div>
+      </div>
+
+
+
+
+
+
+
+     </div>
+
+
+     <div v-if="historia.continuar">
+
+      <div class="row px-5">
+       <div class="col-md-6">
+        <img src="img/genio.jpg" alt="Genio" class="img-fluid rounded-circle">
+       </div>
+
+       <div class="col-md-6">
+
+        <p>
+         ¡Efectivamente es un genio!
+        </p>
+        <p>Si, uno de esos que cuando los dejás en libertad, te concede un deseo. El que quieras.</p>
+
+
+        <a href="index.html#continua2" class="btn btn-color my-2" type="submit"
+         @click="historia.continuar2=true">Continuar</a>
+
+
+       </div>
+
+
+
+       <div v-if="historia.continuar2">
+
+        <div class="row justify-content-around">
+         <div class="col-md-6">
+          <div class="p-5">
+           <p>
+            {{historia.nombre}} está a punto de sacar el tapón de corcho cuando recuerda algo más... Existen genios
+            buenos y genios malos.
+            Se pregunta cómo será el genio de esta botella. Claro que solo hay una manera de averiguarlo: abrir la
+            botella.
+           </p>
+
+          </div>
+
+
+
+          <div id="continua2">
+           <div class="form-group mx-auto d-flex gap-2 botones-choice">
+            <input type="radio" v-model="historia.condicional2" :value="true" id="abrirbotella">
+            <label class="radio-inline bg-1 clickeable text-center text-center" for="abrirbotella">
+             Abrir la botella y dejar al genio en
+             libertad
+            </label>
+
+            <input type="radio" v-model="historia.condicional2" :value="false" id="tirarbotella">
+            <label class="radio-inline bg-2 clickeable text-center" for="tirarbotella">
+             Tirar la botella de nuevo al mar
+            </label>
+
+
+           </div>
+          </div>
+         </div>
+         <div class="col-md-5">
+          <img src="img/dos_genios.jpg" alt="Genio bueno y genio malo" class="img-fluid">
+         </div>
+
+
+        </div>
+
+
+
+        <div v-if="historia.condicional2 == false">
+         <div class="row justify-content-center my-5">
+          <div class="col-6">
+           <div class="py-5 bg-color">
+
+            <p>{{historia.nombre}} decide no abrir la botella. Quien sabe si el genio sería bueno o malo. La tira de
+             nuevo al mar lo más
+             lejos que puede. Será problema de alguien más a partir de ahora...</p>
+
+            <componente-fin></componente-fin>
+
+           </div>
+          </div>
+         </div>
+
+
+
+        </div>
+
+        <div v-if="historia.condicional2">
+
+         <div class="p-5">
+          <p>{{historia.nombre}} decide destapar la botella y liberar al genio. Reune todas tus fuerzas y tira del
+           tapón.</p>
+          <p>De la botella sale una nube de humo amarillo y el genio aparece frente a {{historia.nombre}}. Mide cerca de
+           2 metros y es
+           de
+           contextura muy grande. Sonrie. Debe tratarse de un genio bueno (¡Fiu!)</p>
+
+          <p>- Gracias por liberarme de la botella - dice con voz ostentosa - Tus deseos son ordenes para mi</p>
+          <p>- Wow. Cualquier deseo? - Pregunta {{historia.nombre}}</p>
+          <p>- Claro - responde el genio</p>
+          <p>- Pero.. ¿Qué podría desear?</p>
+          <p>- Pensá en algo que te guste- Sugiere el genio</p>
+
+          <p>Algo que le guste? Le encanta la pizza...¿No sería genial que todo lo que coma tenga gusto a pizza?</p>
+          <p>También le gusta nadar... Podría desear que todavía fuera verano para poder lanzarse al agua y nadar todo
+           el día</p>
+
+         </div>
+
+
+         <div class="row justify-content-center pb-5">
+          <div class="col-12">
+           <div class="text-main fs-4 fw-bold my-2 text-center">¿Que elegís entonces? </div>
+          </div>
+          <div class="col-10 text-center">
+           <div class="form-group gap-2 botones-choice text-center">
+            <input type="radio" name="decision" v-model="historia.decision" :value="true" id="pizza">
+            <label class="radio-inline bg-1 clickeable text-center text-center" for="pizza">
+             Que todo tenga gusto a pizza
+            </label>
+
+            <input type="radio" name="decision" v-model="historia.decision" :value="false" id="verano">
+            <label class="radio-inline bg-2 clickeable text-center" for="verano">
+             Que sea verano para nadar todo el día
+            </label>
+
+           </div>
+          </div>
+         </div>
+
+
+
+
+         <div v-if="historia.decision">
+          <div class="row p-5 justify-content-around">
+           <div class="col-4">
+            <img src="img/pizza.jpg" alt="Porcion de Pizza" class="img-fluid rounded-circle">
+           </div>
+           <div class="col-5">
+            <p>
+             -Genio - le dice- deseo que todo lo que coma durante esta semana tenga gusto a pizza
+            </p>
+            <p>Casi antes de haber terminado la frase {{historia.nombre}} se encuentra en una silla de un restaurante.
+             Pide una hamburguesa
+             con papas fritas, ¡y sabe a pizza!. A continuación pide una gaseosa, que también sabe a pizza. Al salir se
+             comprás un helado en el camino. ¡Puaj! ¡Helado de pizza!</p>
+            <p>{{historia.nombre}} empieza a pensar que se equivocó con su desición...</p>
+
+            <p>Se siente un poco mal y se encamina a su casa... <br> -Adivina que vamos a comer esta noche! Pizza!- Le
+             dice su familia. Se le revuelve el estomago. Y todavía faltan 7 días más...</p>
+
+
+            <componente-fin></componente-fin>
+
+
+           </div>
+          </div>
+
+
+
+
+
+         </div>
+
+         <div v-if="historia.decision == false">
+
+          <div class="row p-5 justify-content-around">
+           <div class="col-5">
+
+            <img src="img/nadar.jpg" alt="Chica nadando" class="img-fluid">
+           </div>
+
+           <div class="col-5">
+            <componente-elecciones></componente-elecciones>
+
+            <p>-Deseo ir a nadar- dice {{historia.nombre}}</p>
+            <p>Al siguiente momento se encuentra con que hace calor y tiene puesto el traje de baño.
+             Se
+             tira al agua y
+             empieza a nadar. La está pasando tan bien que no se da cuenta de que se adentró mucho y cuando mira
+             atrás comprende que no va a poder regresar a la playa.</p>
+            <componente-continuarhistoria :historia="historia"></componente-continuarhistoria>
+
+           </div>
+
+          </div>
+         </div>
+
+
+
+
+
+
+        </div>
+
+        <div v-if="historia.continuar3">
+
+         <div class="row p-5 justify-content-around align-items-center">
+          <div class="col-6">
+           <p>-Ayudame, genio! - grita {{historia.nombre}}. El genio parece preocupado</p>
+           <p>-Me gustaría ayudarte, pero no sé nadar, lo siento!</p>
+           <p>-Y qué hago ahora?</p>
+           <p>-Bueno, podría convertirte en un pez o tirarte un salvavidas. <br>Tiene que pensar deprisa ¿Qué decidis?
+           </p>
+
+
+
+
+           <div class="form-group gap-2 botones-choice text-center d-flex">
+            <input type="radio" name="decision" v-model="historia.decision2" :value="true" id="pez">
+            <label class="radio-inline bg-1 clickeable text-center text-center" for="pez">
+             Convertirse en pez
+            </label>
+
+            <input type="radio" name="decision" v-model="historia.decision2" :value="false" id="salvavidas">
+            <label class="radio-inline bg-2 clickeable text-center" for="salvavidas">
+             Que el genio le arroje un salvavidas
+            </label>
+
+           </div>
+          </div>
+
+          <div class="col-5 text-right">
+           <img src="img/genio_pensando.jpg" alt="genio pensando" class="img-fluid">
+          </div>
+
+
+
+         </div>
+
+         <div v-if="historia.decision2">
+          <div class="row align-items-center">
+
+           <div class="col-6">
+            <p class="text-main">{{historia.nombre}} se convierte en un pequeño pez.</p>
+            <p>
+             Wow! Es todo tan diferente desde esta perspectiva.
+             De repente todo se empieza a volver oscuro...
+             Cuando se da vuelta ve que es a causa de la sombra de un pez gigante.
+             Intenta escapar, pero es mucho más rápido y grande que {{historia.nombre}}.
+
+             {{historia.nombre}} es devorad@ por un pez gigante.
+            </p>
+
+            <componente-fin></componente-fin>
+
+           </div>
+
+           <div class="col-5">
+            <img src="img/pez_muerto.jpg" alt="Pez muerto" class="img-fluid">
+           </div>
+
+          </div>
+
+
+         </div>
+
+         <div v-if="historia.decision2 == false" class="row p-5">
+
+
+          <div class="col-7 p-5">
+           <componente-elecciones></componente-elecciones>
+           <p class="fw-bold text-main ">
+
+            <p>{{historia.nombre}} casi pierde el aliento. -¡Genio, por favor, tirame un salvavidas!</p>
+            <p>Escucha un silbido y de repente está sobre un gran salvavidas de goma. Suspira con
+             alivio y se
+             dispone
+             a descansar</p>
+            <a href="index.html#continua3" class="btn btn-color my-2" type="submit"
+             @click="historia.continuar4=true">Continuar</a>
+          </div>
+
+          <div class="col-4">
+           <img src="img/salvavidas.jpg" alt="" class="img-fluid rounded-circle">
+          </div>
+
+
+
+
+         </div>
+
+
+
+
+        </div>
+
+        <div v-if="historia.continuar4">
+
+         <div class="p-5">
+
+          <img src="img/mar_noche.webp" alt="" class="img-fluid border-rounded py-4">
+
+          <p>Cuando {{historia.nombre}} abre los ojos es de noche y está flotando en el medio del mar. No se ve nada
+           alrededor, solo
+           oscuridad. En el medio de la desesperación,
+           grita pidiendo ayuda</p>
+          <p>-Genio, por favor, ayudame!- Exclama {{historia.nombre}}</p>
+          <p>-Solo puedo concederte un último deseo más... - Dice el genio - Puedo devolverte a la playa donde me
+           encontraste, o puedo darte la habilidad de volar para que regreses por tu cuenta...</p>
+         </div>
+
+         <div class="form-group gap-2 botones-choice text-center d-flex mx-auto text-center justify-content-center">
+          <input type="radio" name="decision" v-model="historia.decision3" :value="true" id="playa">
+          <label class="radio-inline bg-1 clickeable text-center text-center" for="playa">
+           Volver a la playa
+          </label>
+
+          <input type="radio" name="decision" v-model="historia.decision3" :value="false" id="volar">
+          <label class="radio-inline bg-2 clickeable text-center" for="volar">
+           Poder volar
+          </label>
+
+
+         </div>
+
+
+
+
+        </div>
+
+        <div v-if="historia.decision3 == false">
+
+         <div class="row p-5">
+
+          <div class="col-6">
+           <img src="img/playa.png" alt="Playa" class="img-fluid">
+          </div>
+
+          <div class="col-6">
+           <p>De repente {{historia.nombre}} se empieza a elevar en el aire y deja atrás el salvavidas. Desde la altura
+            se puede ver todo!
+           </p>
+           <p>Visualiza la playa y se dirige hacia ella.</p>
+           <p>Después de un rato volando {{historia.nombre}} se encuentra de nuevo en la playa donde todo comenzó. El
+            genio desapareció, y
+            no
+            escucha más que el tranquilo murmullo de las olas</p>
+           <p>Ya es hora de volver a casa...</p>
+           <p>Concocer a un genio fue algo increible!</p>
+           <componente-fin></componente-fin>
+
+
+
+          </div>
+         </div>
+        </div>
+
+
+        <div v-if="historia.decision3">
+         <div class="row p-5">
+
+          <div class="col-6">
+           <img src="img/playa.png" alt="Playa" class="img-fluid">
+          </div>
+
+          <div class="col-6">
+
+
+           <p>Sin más, {{historia.nombre}} se encuentra de nuevo en la playa donde todo comenzó. El genio desapareció, y
+            no se
+            escucha más que el tranquilo murmullo de las olas</p>
+           <p>Ya es hora de volver a casa...</p>
+           <p>Concocer a un genio fue algo increible!</p>
+           <componente-fin></componente-fin>
+
+
+
+          </div>
+
+         </div>
+        </div>
+       </div>
+      </div>
+
+
+     </div>
+    </div>
+
+   </div>
+ </div>
+
+ </main>
+ </div>
+
+ </div>
+
+
+ <!-- Componentes -->
+ <script src="scripts/componentes/componente-navbar.js"></script>
+ <script src="scripts/componentes/componente-choice.js"></script>
+ <script src="scripts/componentes/componente-continuarhistoria.js"></script>
+ <script src="scripts/componentes/componente-elecciones.js"></script>
+ <script src="scripts/componentes/componente-fin.js"></script>
+
+
+
+ <script src="scripts/app.js"></script>
+
+</body>
+
+</html>
